@@ -2,13 +2,15 @@ import axios from 'axios';
 
 class Request {
     async users(id) {
+        const apiUrl = process.env.VUE_APP_API_URL;
         const route = id ? `user/${id}` : "user/all";
-        const response = await axios.get(`https://mighty-ocean-88528.herokuapp.com/api/${route}`);
+        const response = await axios.get(`${apiUrl}/api/${route}`);
         return response.data;
     }
 
     async unsubscribe(id) {
-        const response = await axios.delete(`https://mighty-ocean-88528.herokuapp.com/api/unsubscribe/${id}`);
+        const apiUrl = process.env.VUE_APP_API_URL;
+        const response = await axios.delete(`${apiUrl}/api/unsubscribe/${id}`);
         return response.data;
     }
 
@@ -18,12 +20,14 @@ class Request {
         } else {
             data['method'] = 'create';
         }
-        const response = await axios.post(`https://mighty-ocean-88528.herokuapp.com/api/registerSubmit`, data);
+        const apiUrl = process.env.VUE_APP_API_URL;
+        const response = await axios.post(`${apiUrl}/api/registerSubmit`, data);
         return response.data;
     }
 
     async authUser (data) {
-        const response = await axios.post('https://mighty-ocean-88528.herokuapp.com/api/authUser', data);
+        const apiUrl = process.env.VUE_APP_API_URL;
+        const response = await axios.post(`${apiUrl}/api/authUser`, data);
         return response.data;
     }
 
