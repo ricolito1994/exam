@@ -1,26 +1,17 @@
-# exam
-```
-Programming Growmodo Challenge Basic CRUD Function Using VUE JS 
-```
-## Project setup
-```
-npm install
-```
+<h1> exam</h1>
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+<p>Programming Growmodo Challenge Basic CRUD Function Using VUE JS and Laravel/PHP</p>
 
-### Compiles and minifies for production
-```
-npm run build
-```
+<h2>For Production (Remote laravel server hosted using heroku)</h2>
 
-### Lints and fixes files
-```
-npm run lint
-```
+<code>https://mighty-ocean-88528.herokuapp.com</code>
+
+
+<h2>For Development (local server)</h2>
+
+<code>127.0.0.1:8000</code>
+
+
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
