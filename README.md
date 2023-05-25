@@ -6,6 +6,9 @@
 username : admin
 password : growmodoadmin
 
+<h3>Build to Production</h3>
+<code>npm run build</code>
+
 <h2>For Production (Remote laravel server hosted using heroku)</h2>
 
 <code>https://mighty-ocean-88528.herokuapp.com</code>
