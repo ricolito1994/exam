@@ -1,0 +1,12 @@
+.mobile-mode{
+    width: 100%;
+    display: none;
+}
+
+.mobile-mode ul {
+    list-style-type: none;
+}
+
+.mobile-mode ul li a {
+    color:white;
+}
