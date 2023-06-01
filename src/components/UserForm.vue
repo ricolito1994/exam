@@ -5,10 +5,10 @@
 
         <p>Please provide your information on the form below.</p>
 
-         <div class="form-floating">
+        <div class="form-floating">
             <input type="text" v-model="registerData.email.value" class="form-control" placeholder="name@example.com">
-                <label for="floatingInput">Email address</label>
-                <div v-if="registerData.email.err" class="error-msg">{{ registerData.email.errmsg }}</div>
+            <label for="floatingInput">Email address</label>
+            <div v-if="registerData.email.err" class="error-msg">{{ registerData.email.errmsg }}</div>
         </div>
 
         <div class="form-floating">
