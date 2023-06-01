@@ -9,7 +9,7 @@ password : growmodoadmin
 <h3>Build to Production</h3>
 <code>npm run build</code>
 
-hosted using Netlify: https://www.netlify.com/](https://examgrowmodo.netlify.app/)
+hosted using Netlify: https://examgrowmodo.netlify.app/
 
 
 <h2>For Production (Remote laravel server hosted using heroku)</h2>
