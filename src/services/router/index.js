@@ -3,6 +3,7 @@ import DashBoard from "@/views/Dashboard.vue";
 import LoginPage from "@/views/LoginPage.vue";
 import RegisterPage from "@/views/RegisterPage.vue";
 import UsersPage from "@/views/UsersPage.vue";
+import NotFound from '@/views/NotFound.vue';
 
 const routes = [
     {
@@ -25,7 +26,12 @@ const routes = [
         path: '/users',
         name : "UsersPage",
         component: UsersPage
-    }
+    },
+    { 
+        path: '/:pathMatch(.*)*', 
+        name: 'NotFound', 
+        component: NotFound 
+    },
 ]
 
 const router = createRouter({
