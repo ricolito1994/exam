@@ -1,12 +1,17 @@
 <template>
   <main id="main-container">
     <div>
-      <h4>Welcome {{ user ? user.username : "" }}</h4>
+      <h1>PAGE NOT FOUND</h1>
+      <p>The URL you requested is invalid. You may:</p>
+      <button v-if="!isAuthenticated" @click="redirect('/login')" class="btn btn-primary">Login</button>&nbsp; 
+      <button v-if="!isAuthenticated" @click="redirect('/register')" class="btn btn-primary">Register</button>
+      <button v-if="isAuthenticated" @click="redirect('/')" class="btn btn-primary">Go Back to Dashboard</button>
     </div>
   </main>
 </template>
 
 <script>
+
 export default {
   name: 'DashBoard',
   computed : {
@@ -17,9 +22,9 @@ export default {
       return this.$store.state.isAuthenticated;
     }
   },
-  created () {
-    if(!this.$store.state.isAuthenticated) {
-      this.$router.push("/login");
+  methods : {
+    redirect (page) {
+        this.$router.push(`${page}`);
     }
   },
   components : {
@@ -43,7 +48,7 @@ export default {
 }
 
 #main-container div {
-  float:left;
+    margin-top:10%;
 }
 
 h3 {
