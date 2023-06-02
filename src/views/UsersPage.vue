@@ -112,6 +112,8 @@
     height: 90%;
     width: 100%;
     border:1px solid #ccc;
+    overflow-x: scroll;
+    font-size: 15px;
   }
 
   .my-table{
