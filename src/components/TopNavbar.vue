@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding-left:1%; z-index: 999;">
-        <a class="navbar-brand" href="#"><img :src="logo" width="30"></a>
+        <a class="navbar-brand" href="#" @click.prevent="homePage()"><img :src="logo" width="30"></a>
         <button @click="toggleMobileMenu" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -96,17 +96,18 @@
             },
             logout () {
                 this.$store.dispatch('logoutUser');
-                this.$router.push("/login");
+                this.$router.push("/");
             },
             toggleMobileMenu () {
-                
                 this.isOpenMobileMenu = !this.isOpenMobileMenu;
                 if (this.isOpenMobileMenu) {
                     $(".mobile-mode").slideDown();
                 } else {
                     $(".mobile-mode").slideUp();
                 }
-
+            },
+            homePage() {
+                this.$router.push("/");
             },
         },
         props: {
