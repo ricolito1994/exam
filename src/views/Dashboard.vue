@@ -1,7 +1,29 @@
 <template>
   <main id="main-container">
-    <div>
-      <h4>Welcome {{ user ? user.username : "" }}</h4>
+    <div v-if="isAuthenticated" id="welcome-banner">
+      <div id="image-profile-banner">
+        <img :src="profileImage" />
+      </div>
+      <div id="details-banner">
+        <div id="welcome"><h2>Welcome {{ user ? user.username : "" }}</h2></div>
+        <div class="option-details"><p><em>Welcome to dashboard.</em></p></div>
+      </div>
+    </div>
+    <div v-if="!isAuthenticated">
+      <img :src="logo" />
+      <h3>WELCOME</h3>
+      <div>
+        <p>
+          <em>
+            Growmodo programming challenge basic CRUD using PHP/LARAVEL and VUEJS.
+          </em>
+        </p>
+      </div>
+      <div>
+        <br>
+        <button @click="redirect('/login')" class="btn btn-primary">Login</button>&nbsp;
+        <button @click="redirect('/register')" class="btn btn-primary">Register</button>
+      </div>
     </div>
   </main>
 </template>
@@ -9,25 +31,31 @@
 <script>
 export default {
   name: 'DashBoard',
+  data () {
+    return {
+      logo : require('@/assets/logo.png'),
+    }
+  },
   computed : {
     user () {
       return this.$store.state.user ? this.$store.state.user : null;
     },
     isAuthenticated () {
       return this.$store.state.isAuthenticated;
+    },
+    profileImage () {
+      return require('@/assets/profile.jpg');
     }
+  },
+  methods: {
+    redirect(page) {
+      this.$router.push(page);
+    },
   },
   created () {
-    if(!this.$store.state.isAuthenticated) {
-      this.$router.push("/login");
-    }
   },
   components : {
-    
   },
-  props: {
-    msg: String
-  }
 }
 </script>
 
@@ -42,8 +70,33 @@ export default {
   padding: 1%;
 }
 
-#main-container div {
+#main-container #welcome-banner {
+  height: 30%;
+  width: 100%;
+}
+
+#main-container #welcome-banner #image-profile-banner {
   float:left;
+  width: 15%;
+  height: 100%;
+}
+#main-container #welcome-banner #image-profile-banner img {
+  float:right;
+  width: 100%;
+  
+}
+
+#main-container #welcome-banner #details-banner {
+  width:85%;
+  margin-left:15%;
+  height:100%;
+  padding: 0.6%;
+}
+
+#main-container #welcome-banner #details-banner div {
+  float: left;
+  width: 100%;
+  text-align: left;
 }
 
 h3 {
