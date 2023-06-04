@@ -37,11 +37,17 @@
 
         <button class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
     </form>
+    <loading-modal v-if="loading"></loading-modal>
+    
 </template>
 <script>
     import Request from '@/services/request';
+    import LoadingModal from '@/components/LoadingModal.vue';
     export default {
         name: "UserForm",
+        components : {
+            LoadingModal,
+        },
         data () {
             return {
                 registerData : {
@@ -73,6 +79,7 @@
                 },
                 logo : require('@/assets/logo.png'),
                 requestService : null,
+                loading: false,
             }
         },
         created () {
@@ -99,6 +106,7 @@
                 this.closeDialog()
             },
             registerUser () {
+                this.loading = true;
                 for (let i in this.registerData) {
                     this.registerData[i].err = false;
                 }
@@ -131,6 +139,9 @@
                                 this.registerData[i].errmsg = err[i][0];
                             }
                         }
+                    })
+                    .finally (()=>{
+                        this.loading = false;
                     });
             }
         }

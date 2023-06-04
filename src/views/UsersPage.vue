@@ -28,17 +28,20 @@
             </tbody>
         </table>
       </div>
-      <user-modal :user="user" :closeDialog="closeDialog" v-if="isUserDialogOpen"></user-modal>
+      <user-modal :user="user" :closeDialog="closeDialog" :saveUser="saveUser" v-if="isUserDialogOpen"></user-modal>
+      <loading-modal v-if="loading"></loading-modal>
     </main>
   </template>
   <script>
   import Request from '@/services/request';
   import UserModal from '@/components/UserModal.vue';
+  import LoadingModal from '@/components/LoadingModal.vue';
 
   export default {
     name: 'UsersPage',
     components : {
-      UserModal
+      UserModal,
+      LoadingModal,
     },
     computed : {
     },
@@ -48,6 +51,7 @@
         users : [],
         user : {},
         isUserDialogOpen : false,
+        loading : false,
        } 
     },
     mounted () {
@@ -56,13 +60,17 @@
     methods : {
       closeDialog () {
         this.isUserDialogOpen = false;
+      },
+      saveUser () {
+        this.isUserDialogOpen = false;
         this.loadUsers();
       },
       editUser(userid) {
+        this.loading = true;
         this.requestService.users(userid).then ( (res) => {
-            console.log(res);
             this.user = res;
             this.isUserDialogOpen = true;
+            this.loading = false;
         })
         .catch(err => {
             console.error(err);
@@ -71,6 +79,8 @@
       deleteUser(userid) {
         if (!confirm(`Are you sure you want to delete this user:${userid}?`))
           return;
+        this.loading = true;
+
         this.requestService.unsubscribe(userid)
             .then ( res => {
               console.log(res);
@@ -81,9 +91,12 @@
             })
       },
       loadUsers () {
+        if(!this.loading)
+          this.loading = true;
         this.requestService = new Request();
         this.requestService.users().then ( (res) => {
           this.users = res;
+          this.loading = false;
         })
         .catch(err => {
           console.error(err);

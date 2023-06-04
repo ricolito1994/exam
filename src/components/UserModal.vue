@@ -6,7 +6,7 @@
                 <div class="modal-header">
                 </div>
                 <div class="modal-body">
-                    <user-form :userdata="user" :done-saving="closeUserDialog"></user-form>
+                    <user-form :userdata="user" :done-saving="doneSaving"></user-form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" @click="closeUserDialog">Close</button>
@@ -39,9 +39,15 @@
             },
             closeDialog: {
                 type: Function,
-            }
+            },
+            saveUser : {
+                type : Function,
+            },
         },
         methods : {
+            doneSaving () {
+                this.saveUser()
+            },
             closeUserDialog () {
                 this.closeDialog()
             },
