@@ -26,12 +26,18 @@
             <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
             <p class="mt-5 mb-3 text-body-secondary">&copy; 2023</p>
         </form>
+        <loading-modal v-if="loading"></loading-modal>
     </main>
 </template>
 <script>
     import Request from '@/services/request';
-
+    import LoadingModal from '@/components/LoadingModal.vue';
     export default {
+        components : {
+          LoadingModal,
+        },
+        computed : {
+        },
         data () {
           return {
             username : '',
@@ -39,6 +45,7 @@
             logo : require('@/assets/logo.png'),
             requestService : null,
             loginError : false,
+            loading: false,
           }
         },
         created () {
@@ -54,6 +61,7 @@
               username : this.username,
               password : this.password,
             }
+            this.loading = true;
             let serverRequest = this.requestService.authUser(data);
                 serverRequest.then ( (res) => {
                     if(res) {
@@ -66,8 +74,11 @@
                 .catch ( (err) => {
                     console.log(err)
                     this.loginError = true;
+                })
+                .finally(()=>{
+                  this.loading = false;
                 });
-          }
+          },
         }
     }
 </script>
