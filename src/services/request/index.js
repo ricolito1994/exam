@@ -15,11 +15,7 @@ class Request {
     }
 
     async registerUser (data, id) {
-        if (id) {
-            data['method'] = id
-        } else {
-            data['method'] = 'create';
-        }
+        data['method'] = id ? id : 'create';
         const apiUrl = process.env.VUE_APP_API_URL;
         const response = await axios.post(`${apiUrl}/api/registerSubmit`, data);
         return response.data;

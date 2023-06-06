@@ -1,6 +1,6 @@
 <template>
     <main id="main-container">
-      <div style="width:100%;">
+      <div>
         <h4>Registered Users</h4>
       </div>
       <div class="users-table-container">
@@ -27,6 +27,9 @@
                 </tr>
             </tbody>
         </table>
+      </div>
+      <div style="padding-top:0.5%;">
+        <button @click="editUser()" class="btn btn-success">+ Register User</button>
       </div>
       <user-modal :user="user" :closeDialog="closeDialog" :saveUser="saveUser" v-if="isUserDialogOpen"></user-modal>
       <loading-modal v-if="loading"></loading-modal>
@@ -61,8 +64,9 @@
       closeDialog () {
         this.isUserDialogOpen = false;
       },
-      saveUser () {
+      saveUser (res) {
         this.isUserDialogOpen = false;
+        console.log(res,this.users[0]);
         this.loadUsers();
       },
       editUser(userid) {
@@ -93,13 +97,16 @@
       loadUsers () {
         if(!this.loading)
           this.loading = true;
+          
         this.requestService = new Request();
         this.requestService.users().then ( (res) => {
           this.users = res;
-          this.loading = false;
         })
         .catch(err => {
           console.error(err);
+        })
+        .finally(()=>{
+          this.loading = false;
         })
       }
     },
