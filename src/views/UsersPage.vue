@@ -15,7 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="user in users" :key="user.id">
+                <tr v-for="user in users" :key="user.id" :id="user.id">
                     <td>{{ user.username }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.phone_number }}</td>
@@ -39,7 +39,7 @@
   import Request from '@/services/request';
   import UserModal from '@/components/UserModal.vue';
   import LoadingModal from '@/components/LoadingModal.vue';
-
+  import $ from 'jquery';
   export default {
     name: 'UsersPage',
     components : {
@@ -66,8 +66,24 @@
       },
       saveUser (res) {
         this.isUserDialogOpen = false;
-        console.log(res,this.users[0]);
-        this.loadUsers();
+        const index = this.users.findIndex (x => x.id == res.res.id);
+
+        if (index >= 0) {
+          for(let i in res.res) {
+            let sel = res.res[i];
+            this.users[index][i] = sel;
+          }
+        } else {
+          res.res['designation'] = 0;
+          this.users.unshift(res.res);
+        }
+        setTimeout(function() {
+          $(`tr#${res.res.id}`).css({'background':'yellow', 'transition' : 'background-color 1s'})
+        }, 100);
+
+        setTimeout(function() {
+          $(`tr#${res.res.id}`).css('background-color', 'transparent');
+        }, 2000);
       },
       editUser(userid) {
         this.loading = true;
@@ -87,11 +103,16 @@
 
         this.requestService.unsubscribe(userid)
             .then ( res => {
-              console.log(res);
-              this.loadUsers();
+              const index = this.users.findIndex (x => x.id == res.id);
+              if (index >= 0) {
+                this.users.splice(index, 1);
+              }
             })
             .catch ( err => {
               console.error(err);
+            })
+            .finally (()=>{
+              this.loading = false;
             })
       },
       loadUsers () {
