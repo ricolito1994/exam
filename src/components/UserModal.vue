@@ -45,8 +45,8 @@
             },
         },
         methods : {
-            doneSaving () {
-                this.saveUser()
+            doneSaving (res) {
+                this.saveUser(res)
             },
             closeUserDialog () {
                 this.closeDialog()

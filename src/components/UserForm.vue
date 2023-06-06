@@ -102,9 +102,6 @@
             }
         },
         methods : {
-            closeUserDialog () {
-                this.closeDialog()
-            },
             registerUser () {
                 this.loading = true;
                 for (let i in this.registerData) {
@@ -122,17 +119,19 @@
                     this.registerData.confirmPassword.errmsg = "Password must be identical.";
                     this.registerData.password.err = true;
                     this.registerData.password.errmsg = "Password must be identical.";
+                    this.loading = false;
                     return;
                 }
                 const id = this.userdata ? this.userdata.id : null;
-
                 let serverRequestService = this.requestService.registerUser(data, id);
                     serverRequestService.then ( (res) => {
                         console.log(res);
-                        this.doneSaving();
+                        this.doneSaving(res);
                     })
                     .catch ( (err) => {
                         err = err.response.data.errors;
+                        
+                        console.log(err);
                         for (let i in err) {
                             if (this.registerData[i]) {
                                 this.registerData[i].err = true;
