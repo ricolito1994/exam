@@ -6,32 +6,38 @@
         <p>Please provide your information on the form below.</p>
 
         <div class="form-floating">
-            <input type="text" v-model="registerData.email.value" class="form-control" placeholder="name@example.com">
+            <input type="text" @keyup.enter="registerUser()" v-model="registerData.email.value" class="form-control" placeholder="name@example.com">
             <label for="floatingInput">Email address</label>
             <div v-if="registerData.email.err" class="error-msg">{{ registerData.email.errmsg }}</div>
         </div>
 
         <div class="form-floating">
-            <input type="text" v-model="registerData.username.value" class="form-control" placeholder="Password">
+            <input type="text" @keyup.enter="registerUser()" v-model="registerData.username.value" class="form-control" placeholder="Password">
             <label for="floatingInput">Username</label>
             <div v-if="registerData.username.err" class="error-msg">{{ registerData.username.errmsg }}</div>
         </div>
 
         <div class="form-floating">
-            <input type="text" v-model="registerData.phone_number.value" class="form-control" placeholder="Password">
+            <input type="text" @keyup.enter="registerUser()" v-model="registerData.phone_number.value" class="form-control" placeholder="Password">
             <label for="floatingInput">Phone Number</label>
             <div v-if="registerData.phone_number.err" class="error-msg">{{ registerData.phone_number.errmsg }}</div>
         </div>
 
         <div class="form-floating">
-            <input type="password" v-model="registerData.password.value" class="form-control" placeholder="Password">
+            <input :type="showPassword1 ? 'text' : 'password'" @keyup.enter="registerUser()" v-model="registerData.password.value" class="form-control" placeholder="Password">
             <label for="floatingInput">Password</label>
+            <span class="password-toggle" @click="togglePasswordVisibility1">
+                {{ showPassword1 ? 'hide' : 'show' }}
+            </span>
             <div v-if="registerData.password.err" class="error-msg">{{ registerData.password.errmsg }}</div>
         </div>
 
         <div class="form-floating">
-            <input type="password" v-model="registerData.confirmPassword.value" class="form-control" placeholder="Password">
+            <input :type="showPassword2 ? 'text' : 'password'" @keyup.enter="registerUser()" v-model="registerData.confirmPassword.value" class="form-control" placeholder="Password">
             <label for="floatingInput">Confirm Password</label>
+            <span class="password-toggle" @click="togglePasswordVisibility2">
+                {{ showPassword2 ? 'hide' : 'show' }}
+            </span>
             <div v-if="registerData.confirmPassword.err" class="error-msg">{{ registerData.confirmPassword.errmsg }}</div>
         </div><br>
 
@@ -80,6 +86,8 @@
                 logo : require('@/assets/logo.png'),
                 requestService : null,
                 loading: false,
+                showPassword1 : false,
+                showPassword2 : false,
             }
         },
         created () {
@@ -142,6 +150,12 @@
                     .finally (()=>{
                         this.loading = false;
                     });
+            },
+            togglePasswordVisibility1() {
+                this.showPassword1 = !this.showPassword1;
+            },
+            togglePasswordVisibility2() {
+                this.showPassword2 = !this.showPassword2;
             }
         }
     }
@@ -172,5 +186,14 @@
         font-size:12px;
         color:red;
         text-align:left;
+    }
+
+    .password-toggle {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #7a7878;
     }
 </style>
