@@ -5,13 +5,16 @@
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
             <div class="form-floating">
-              <input type="username" v-model="username" class="form-control" id="floatingInput" placeholder="name@example.com">
+              <input type="username" @keyup.enter="login()" v-model="username" class="form-control" id="floatingInput" placeholder="name@example.com">
               <label for="floatingInput">Email address</label>
             </div>
 
             <div class="form-floating">
-              <input type="password" v-model="password" class="form-control" id="floatingPassword" placeholder="Password">
+              <input :type="showPassword ? 'text' : 'password'" @keyup.enter="login()" v-model="password" class="form-control" id="floatingPassword" placeholder="Password">
               <label for="floatingPassword">Password</label>
+              <span class="password-toggle" @click="togglePasswordVisibility">
+                {{ showPassword ? 'hide' : 'show' }}
+              </span>
             </div>
 
             <!--<div class="checkbox mb-3">
@@ -46,6 +49,7 @@
             requestService : null,
             loginError : false,
             loading: false,
+            showPassword : false,
           }
         },
         created () {
@@ -79,7 +83,10 @@
                   this.loading = false;
                 });
           },
-        }
+          togglePasswordVisibility () {
+            this.showPassword = !this.showPassword;
+          }
+        },
     }
 </script>
 <style>
